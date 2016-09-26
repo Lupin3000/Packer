@@ -1,0 +1,3 @@
+$ mkdir ~/Projects/Packer-Alpine && cd ~/Projects/Packer-Alpine
+$ mkdir {src,target}
+$ touch {Makefile,packer.json,src/answers}
