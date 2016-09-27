@@ -13,7 +13,7 @@
       "iso_checksum_type": "{{ user `type` }}",
       "headless": "{{ user `non_gui` }}",
       "output_directory": "builds",
-      "vm_name": "Alpine_to_Vagrant",
+      "vm_name": "Alpine",
       "guest_os_type": "Linux26_64",
       "disk_size": "8192",
       "hard_drive_interface": "sata",
@@ -71,7 +71,7 @@
     {
       "type": "vagrant",
       "keep_input_artifact": false,
-      "compression_level": 9,
+      "compression_level": 6,
       "vagrantfile_template": "src/Vagrantfile.template",
       "output": "target/{{.Provider}}-Alpine-3.4.box"
     }
