@@ -50,7 +50,7 @@
       "ssh_password": "toor",
       "ssh_port": 22,
       "ssh_wait_timeout": "10m",
-      "guest_additions_path": "disable",
+      "guest_additions_mode": "disable",
       "shutdown_command": "poweroff"
     }
   ],
@@ -68,7 +68,8 @@
     },
     {
       "type": "ansible",
-      "playbook_file": "orchestration/playbook.yml"
+      "playbook_file": "orchestration/playbook.yml",
+      "user": "vagrant"
     }
   ],
   "post-processors": [
