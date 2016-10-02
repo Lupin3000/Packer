@@ -1,5 +1,0 @@
----
-- hosts: all
-  tasks:
-    - name: install virtualbox guest additions
-      raw: apk add virtualbox-guest-modules-grsec virtualbox-additions-grsec
