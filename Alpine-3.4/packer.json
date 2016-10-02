@@ -65,7 +65,7 @@
           "execute_command": "/bin/sh '{{.Path}}'"
         }
       }
-    },
+    }
   ],
   "post-processors": [
     {
