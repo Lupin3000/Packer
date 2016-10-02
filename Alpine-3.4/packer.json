@@ -65,6 +65,10 @@
           "execute_command": "/bin/sh '{{.Path}}'"
         }
       }
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "orchestration/playbook.yml"
     }
   ],
   "post-processors": [
