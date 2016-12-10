@@ -1,0 +1,62 @@
+{
+  "variables": {
+    "iso_file": "http://linuxsoft.cern.ch/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
+    "iso_checksum": "88c0437f0a14c6e2c94426df9d43cd67",
+    "type": "md5",
+    "non_gui": "true"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "iso_url": "{{ user `iso_file` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `type` }}",
+      "headless": "{{ user `non_gui` }}",
+      "output_directory": "builds",
+      "vm_name": "Minimal-CentOS7",
+      "guest_os_type": "RedHat_64",
+      "disk_size": "12288",
+      "hard_drive_interface": "sata",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024"],
+        ["modifyvm", "{{.Name}}", "--cpus", "1"],
+        ["modifyvm", "{{.Name}}", "--audio", "none"],
+        ["modifyvm", "{{.Name}}", "--usb", "off"]
+      ],
+      "http_directory": "src",
+      "boot_wait": "5s",
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+      ],
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "600s",
+      "guest_additions_mode": "upload",
+      "guest_additions_path": "/home/vagrant/VBoxGuestAdditions.iso",
+      "shutdown_command": "sudo shutdown -h 0"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "src/installVBoxGuestAdditions.sh",
+        "src/cleanup.sh"
+      ],
+      "override": {
+        "virtualbox-iso": {
+          "execute_command": "/bin/sh '{{.Path}}'"
+        }
+      }
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": false,
+      "compression_level": 9,
+      "output": "target/{{.Provider}}-CentOS-7.box"
+    }
+  ]
+}
