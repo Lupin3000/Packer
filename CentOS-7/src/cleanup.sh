@@ -12,10 +12,13 @@ sudo truncate -s 0 {'/var/log/cron','/var/log/dmesg','/var/log/dmesg.old','/var/
 # truncate resolv.conf
 sudo truncate -s 0 /etc/resolv.conf
 
+# clear repo
 sudo yum clean all
 
+# 0 disk
 sudo dd if=/dev/zero of=/EMPTY bs=1M | true
 sudo rm -fr /EMPTY
 
+# clear history
 rm -f .bash_history
 history -c
