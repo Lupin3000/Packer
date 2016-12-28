@@ -10,6 +10,9 @@ Vagrant.configure("2") do |config|
   # Disable automatic box update checking.
   config.vm.box_check_update = false
 
+  # Disable key change
+  config.ssh.insert_key = false
+
   # Share an additional folder to the guest VM.
   config.vm.synced_folder ".", "/vagrant_data", disabled: true
 
@@ -18,7 +21,7 @@ Vagrant.configure("2") do |config|
     vb.gui = true
     vb.name = ""
     vb.memory = "1024"
-    vb.v.cpus = 1
+    vb.cpus = 1
   end
 
 end
