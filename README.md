@@ -1,6 +1,6 @@
 # Packer repository
 
-... build some Vagrant boxes for VirtualBox ...
+... build some Vagrant base boxes for VirtualBox ...
 
 ## Requirements
 
@@ -10,7 +10,7 @@
 
 ## Additional Information
 
-2 users are created for every vagrant box. There are root (pw:toor) and vagrant (pw:vagrant). Public key for vagrant can be find [here](https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub).
+2 users are created for every vagrant box. There are users root (pw:toor) and vagrant (pw:vagrant). Public key for vagrant can be found [here](https://raw.githubusercontent.com/mitchellh/vagrant/master/keys/vagrant.pub).
 
 ## How-to
 
@@ -21,6 +21,15 @@ $ git clone https://github.com/Lupin3000/Packer.git
 # change directory
 $ cd Packer/Alpine-3.4
 
-# build
+# build via packer
 $ packer build packer.json
+
+# change back to root directory
+$ cd ..
+
+# edit Vagrantfile (add missing values)
+$ vim Vagrantfile
+
+# run environment via vagrant
+$ vagrant up
 ```
