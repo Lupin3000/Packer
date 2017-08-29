@@ -16,7 +16,7 @@
 
 ### Example build vagrant box
 
-```
+```shell
 # clone repository
 $ git clone https://github.com/Lupin3000/Packer.git
 
