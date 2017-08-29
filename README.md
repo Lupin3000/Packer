@@ -29,15 +29,25 @@ $ packer build packer.json
 
 ### Example add box
 
+This is when you like to go with default way...
+
 ```shell
-# list current vagrant boxes
+# list current vagrant boxes (optional)
 $ vagrant box list
 
 # add new created box
 $ vagrant box add lupin/debian9 target/virtualbox-Debian-9.box
+
+# create directory
+$ mkdir -p ~/Projects/Debian9 && cd ~/Projects/Debian9
+
+# init with specific box
+$ vagrant init lupin/debian9
 ```
 
 ### Example use Vagrantfile
+
+This is when you are in development mode...
 
 ```shell
 # change back to root directory
