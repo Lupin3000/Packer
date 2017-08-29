@@ -1,0 +1,78 @@
+{
+  "variables": {
+    "iso_file": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-9.1.0-amd64-netinst.iso",
+    "iso_checksum": "ddd8f6542dae8baf410e90b9ae0fe986",
+    "type": "md5",
+    "non_gui": "false"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "iso_url": "{{ user `iso_file` }}",
+      "iso_checksum": "{{ user `iso_checksum` }}",
+      "iso_checksum_type": "{{ user `type` }}",
+      "headless": "{{ user `non_gui` }}",
+      "output_directory": "builds",
+      "vm_name": "Minimal-Debian9",
+      "guest_os_type": "Debian_64",
+      "disk_size": "12288",
+      "hard_drive_interface": "sata",
+      "vboxmanage": [
+        ["modifyvm", "{{.Name}}", "--memory", "1024"],
+        ["modifyvm", "{{.Name}}", "--cpus", "1"],
+        ["modifyvm", "{{.Name}}", "--audio", "none"],
+        ["modifyvm", "{{.Name}}", "--usb", "off"]
+      ],
+      "http_directory": "src",
+      "boot_wait": "5s",
+      "boot_command": [
+        "<esc><wait>",
+        "install <wait>",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
+        "debian-installer=en_US <wait>",
+        "auto <wait>",
+        "locale=en_US.UTF-8 <wait>",
+        "kbd-chooser/method=us <wait>",
+        "keyboard-configuration/xkb-keymap=us <wait>",
+        "netcfg/get_hostname=debian9 <wait>",
+        "netcfg/get_domain=basebox.local <wait>",
+        "fb=false <wait>",
+        "debconf/frontend=noninteractive <wait>",
+        "console-setup/ask_detect=false <wait>",
+        "console-keymaps-at/keymap=us <wait>",
+        "grub-installer/bootdev=/dev/sda <wait>",
+        "<enter><wait>"
+      ],
+      "ssh_username": "vagrant",
+      "ssh_password": "vagrant",
+      "ssh_port": 22,
+      "ssh_wait_timeout": "600s",
+      "guest_additions_mode": "upload",
+      "guest_additions_path": "/home/vagrant/VBoxGuestAdditions.iso",
+      "shutdown_command": "sudo shutdown -h 0"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "src/vagrant.sh",
+        "src/installVBoxGuestAdditions.sh",
+        "src/cleanup.sh"
+      ],
+      "override": {
+        "virtualbox-iso": {
+          "execute_command": "/bin/sh '{{.Path}}'"
+        }
+      }
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "keep_input_artifact": false,
+      "compression_level": 9,
+      "output": "target/{{.Provider}}-Debian-9.box"
+    }
+  ]
+}
