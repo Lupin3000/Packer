@@ -1,7 +1,7 @@
 {
   "variables": {
-    "iso_file": "http://linuxsoft.cern.ch/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1611.iso",
-    "iso_checksum": "d2ec6cfa7cf6d89e484aa2d9f830517c",
+    "iso_file": "http://linuxsoft.cern.ch/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso",
+    "iso_checksum": "5848f2fd31c7acf3811ad88eaca6f4aa",
     "type": "md5",
     "non_gui": "true"
   },
