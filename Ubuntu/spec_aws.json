@@ -1,0 +1,42 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": "",
+    "aws_region": "us-east-1",
+    "aws_instance_type": "t2.micro",
+    "aws_ami_name": "Ubuntu-Packer"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{ user `aws_access_key`}}",
+    "secret_key": "{{ user `aws_secret_key`}}",
+    "region": "{{ user `aws_region`}}",
+    "ami_name": "{{ user `aws_ami_name`}} {{timestamp}}",
+    "instance_type": "{{ user `aws_instance_type`}}",
+    "source_ami_filter": {
+      "filters": {
+      "virtualization-type": "hvm",
+      "name": "ubuntu/images/*ubuntu-xenial-16.04-amd64-server-*",
+      "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    },
+    "ami_description": "Customized Amazon Ubuntu linux by Packer amazon-ebs",
+    "tags": {
+      "OS_Version": "Ubuntu",
+      "Release": "Latest",
+      "Name": "{{ user `aws_ami_name`}}",
+      "Base_AMI_Name": "{{ .SourceAMIName }}",
+      "Extra": "{{ .SourceAMITags.TagName }}"
+    },
+    "ssh_username": "ubuntu"
+  }],
+  "provisioners": [{
+      "type": "shell",
+      "inline": [
+        "whoami",
+        "pwd"
+      ]
+  }]
+}
